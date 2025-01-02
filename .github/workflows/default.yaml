@@ -1,0 +1,37 @@
+name: "Test NixOS Flake"
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Nix
+      uses: DeterminateSystems/nix-installer-action@main
+    
+    - name: Check Nix Flake
+      run: |
+        nix flake check
+        
+    - name: Build DevOps Configuration
+      run: |
+        nix build .#nixosConfigurations.devops-workstation.config.system.build.toplevel
+        
+    - name: Build Personal Configuration
+      run: |
+        nix build .#nixosConfigurations.personal.config.system.build.toplevel
+
+    - name: Run Flake Tests
+      run: |
+        nix eval .#nixosConfigurations.devops-workstation.config.system.build.toplevel
+        nix eval .#nixosConfigurations.personal.config.system.build.toplevel
+
+    - name: Check Nixpkgs Format
+      run: |
+        nix run nixpkgs#nixpkgs-fmt -- --check .
