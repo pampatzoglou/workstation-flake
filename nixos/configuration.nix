@@ -47,11 +47,6 @@
     lshw
     dmidecode
     
-    # Security & Authentication
-    yubikey-manager
-    yubikey-personalization
-    pam_u2f
-    
     # GUI applications
     firefox
     chromium
@@ -76,10 +71,6 @@
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
   };
-
-  # Enable Yubikey support
-  services.udev.packages = [ pkgs.yubikey-personalization ];
-  services.pcscd.enable = true;
 
   # User account
   users.users.pantelis = {

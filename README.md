@@ -1,79 +1,104 @@
-# DevOps/SRE Workstation Configuration
+# Workstation Flake
 
-This repository contains a Nix Flake configuration for setting up a DevOps/SRE workstation on either NixOS or macOS. It provides a consistent development environment with all the necessary tools for cloud infrastructure, container orchestration, and development work.
+NixOS/nix-darwin configuration for development workstation setup.
 
-## Features
+## Tool Categories
 
-- Comprehensive DevOps toolset (AWS, GCP, Azure, Kubernetes, Terraform, etc.)
-- Development environment (VSCode, Git, Docker, programming languages)
-- Security tools (Vault, Trivy, etc.)
-- Monitoring and observability tools
-- Consistent configuration across NixOS and macOS
+### Languages & Development
 
-## Prerequisites
+- Programming Languages
+  - Go (cobra-cli)
+  - Python (poetry, pip, black, pylint)
+  - Node.js (yarn)
+  - Rust (rustup)
+- Databases
+  - PostgreSQL (pgcli)
+  - MongoDB (mongosh)
+  - ClickHouse
+  - TimescaleDB
+  - DataGrip
+- Messaging
+  - Kafka (kafkacat)
+  - RabbitMQ (rabbitmqctl)
+  - Pulsar (pulsar-admin, pulsar-client, pulsar-perf, pulsar-shell, bookkeeper)
 
-### NixOS
-- NixOS installed with flakes enabled
-- Git
+### Infrastructure & Cloud
 
-### macOS
-1. Install Nix:
-```bash
-sh <(curl -L https://nixos.org/nix/install)
-```
+- IaC
+  - Terraform (docs, landscape)
+  - Pulumi
+  - AWS CDK
+  - Ansible
+  - Helm (docs, helmfile)
+- Cloud Platforms
+  - AWS (eksctl, aws-vault, saml2aws)
+  - Azure (azure-cli)
+  - GCP (google-cloud-sdk)
+- Platform Engineering
+  - Backstage
+  - Crossplane
+  - Kratix
+  - Skaffold
+  - Teller
 
-2. Enable Flakes:
-```bash
-mkdir -p ~/.config/nix
-echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
-```
+### Containers & Kubernetes
 
-3. Install Nix Darwin:
-```bash
-nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-./result/bin/darwin-installer
-```
+- Container Tools
+  - Docker
+  - Podman
+  - Buildah
+  - Skopeo
+- Kubernetes
+  - Core: kubectl, helm, k9s, KinD
+  - GitOps: ArgoCD
+  - Service Mesh: Istio
+  - Security: Kubeseal
+  - UI: Lens
 
-## Installation
+### Observability
 
-1. Clone this repository:
-```bash
-git clone https://github.com/pampatzoglou/workstation-flake.git
-cd workstation-flake
-```
+- Metrics & Monitoring
+  - promtool
+  - promql
+  - Sloth (SLO generator)
+- Logging
+  - LogCLI
 
-2. Apply the configuration:
+### Security
 
-For NixOS:
-```bash
-sudo nixos-rebuild switch --flake .#workstation
-```
+- Static Analysis (SAST)
+  - Trivy
+  - Veracode
+  - SonarQube
+  - CheckMarx
+- Dynamic Analysis (DAST)
+  - Snyk
+  - OWASP ZAP
+- Policy & Compliance
+  - Kyverno
+  - OPA
+  - Gatekeeper
+  - CIS Benchmarks
+  - Kubescape
+- Secret Management
+  - HashiCorp Vault
+  - External Secrets
+  - Teller
+  - SOPS
+- Access Control
+  - Teleport
+  - Keycloak
+  - IAM tools
+  - SSO integrations
 
-For macOS:
-```bash
-darwin-rebuild switch --flake .#workstation
-```
+## Repository Structure
 
-## Customization
-
-- Common packages: Edit `common/packages.nix`
-- System-specific settings:
-  - NixOS: Edit `nixos/configuration.nix`
-  - macOS: Edit `darwin/configuration.nix`
-- Home Manager settings: Edit `common/home.nix`
-
-## Updating
-
-To update all packages to their latest versions:
-
-```bash
-# On NixOS
-sudo nixos-rebuild switch --flake .#workstation --update-input nixpkgs
-
-# On macOS
-darwin-rebuild switch --flake .#workstation --update-input nixpkgs
-```
-
-## License
-
-MIT
+- common/: Shared configurations
+  - development.nix: Languages, DBs, Dev tools
+  - infrastructure.nix: Cloud, IaC tools
+  - kubernetes.nix: K8s, Container tools
+  - monitoring.nix: Observability stack
+  - security.nix: Security, Policy tools
+- darwin/: macOS specific configurations
+- nixos/: Linux specific configurations
+- flake.nix: Main configuration entry point

@@ -7,26 +7,52 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    darwin = {
+      url = "github:lnl7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, darwin, ... }:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      # Common modules shared between NixOS and Darwin
+      commonModules = [
+        ./common/base.nix
+        ./common/personal.nix
+        ./common/infrastructure.nix
+        ./common/kubernetes.nix
+        ./common/development.nix
+        ./common/monitoring.nix
+        ./common/network.nix
+        ./common/security.nix
+        ./common/yubikey.nix
+      ];
     in {
+      # NixOS configuration
       nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-        inherit system;
+        system = "x86_64-linux";
         modules = [
-          ./hardware-configuration.nix
-          ./common/base.nix
-          ./common/personal.nix
-          ./common/infrastructure.nix
-          ./common/kubernetes.nix
-          ./common/development.nix
-          ./common/monitoring.nix
-          ./common/network.nix
-          ./common/security.nix
-        ];
+          ./nixos/hardware-configuration.nix
+          ./nixos/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.pantelis = import ./common/home.nix;
+          }
+        ] ++ commonModules;
+      };
+
+      # Darwin (macOS) configuration
+      darwinConfigurations.default = darwin.lib.darwinSystem {
+        system = "x86_64-darwin";
+        modules = [
+          ./darwin/configuration.nix
+          home-manager.darwinModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.pantelis = import ./common/home.nix;
+          }
+        ] ++ commonModules;
       };
     };
 }

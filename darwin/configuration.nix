@@ -4,6 +4,9 @@
   # Enable experimental features
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Enable Rosetta 2 for x86_64 support
+  system.rosetta.enable = true;
+
   # Auto upgrade nix package and the daemon service
   services.nix-daemon.enable = true;
 
@@ -15,9 +18,6 @@
     gnutar
     gawk
     findutils
-    
-    # Security & Authentication
-    yubikey-manager
     
     # Terminal utilities
     iterm2
