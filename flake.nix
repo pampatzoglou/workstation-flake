@@ -16,16 +16,15 @@
   outputs = { self, nixpkgs, home-manager, darwin, ... }:
     let
       # Common modules shared between NixOS and Darwin
-      commonModules = [
-        ./common/base.nix
-        ./common/personal.nix
-        ./common/infrastructure.nix
-        ./common/kubernetes.nix
-        ./common/development.nix
-        ./common/monitoring.nix
-        ./common/network.nix
-        ./common/security.nix
-        ./common/yubikey.nix
+      #commonModules = [
+      #  ./common/base.nix
+      #  ./common/personal.nix
+      #  ./common/infrastructure.nix
+      #  ./common/kubernetes.nix
+      #  ./common/development.nix
+      #  ./common/monitoring.nix
+      #  ./common/network.nix
+      #  ./common/security.nix
       ];
     in {
       # NixOS configuration
