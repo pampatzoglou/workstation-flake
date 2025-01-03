@@ -1,41 +1,81 @@
 { pkgs, lib, ... }: {
   environment.systemPackages = with pkgs; [
-    # Kubernetes
+    # Core Kubernetes Tools
     kubectl
-    kubeconform  # Fast Kubernetes manifest validation
-    kube-linter  # Best practices checker for Kubernetes YAML
-    datree       # Policy enforcement and best practices
-    pluto        # Deprecated apiVersion checker
-    trivy        # Container and Kubernetes security scanner
-    popeye       # Kubernetes cluster resource sanitizer
-    kubectx
-    kubernetes-helm
-    k9s
-    kind
-    argocd
-    kubeseal
-    lens
-    istioctl
-    kubescape
-    kube-bench
-    cert-manager-cli
-    velero
-    crossplane-cli
-    kratix
-    skaffold
-    cloudnative-pg
-    kubeshark
-    kubevpn
+    kubectx      # Manage multiple clusters/namespaces
+    kubernetes-helm  # Package manager for Kubernetes
+    k9s          # Terminal UI for Kubernetes
+    kind         # Local Kubernetes clusters
+    krew         # Plugin manager for kubectl
 
-    # Container Tools
+    # Container Runtime & Tools
     docker
     docker-compose
-    skopeo
-    buildah
-    podman
-    buildx
-    qemu    # Multi-arch support
-    k3s     # Lightweight Kubernetes
+    skopeo       # Container image management
+    buildah      # Container image builder
+    podman       # Alternative container runtime
+    buildx       # Multi-arch build support
+    qemu         # Multi-arch support
+    k3s          # Lightweight Kubernetes
+
+    # Security & Compliance Tools
+    kubescape    # Security risk analysis
+    kube-bench   # CIS benchmark testing
+    trivy        # Security scanner
+    kubeseal     # Sealed Secrets management
+    kyverno      # Policy management
+    starboard    # Security toolkit
+
+    # Development & Debugging Tools
+    skaffold     # Local Kubernetes development
+    stern        # Multi-pod log tailing
+    kubectl-debug  # Debug running pods
+    kubectl-trace  # syscall tracing
+    kubectl-capture  # Network traffic capture
+    kubeshark    # API traffic viewer
+    kubevpn      # VPN for cluster access
+
+    # Validation & Best Practices
+    kubeconform  # Fast manifest validation
+    kube-linter  # Best practices checker
+    datree       # Policy enforcement
+    pluto        # Deprecated API checker
+    popeye       # Resource sanitizer
+
+    # Observability & Troubleshooting
+    kubectl-istio-logs  # Istio service logs
+    kubectl-mtail      # Log exporter
+    kubectl-images     # Container image info
+    kubectl-janitor    # Cluster cleanup
+    ktop              # Top for Kubernetes
+
+    # RBAC & Security Analysis
+    kubectl-who-can    # Permission checking
+    kubectl-access-matrix  # Access control viewer
+    kubectl-np-viewer  # Network policy viewer
+    kubectl-rolesum   # RBAC overview
+    kubectl-rbac-tool # RBAC management
+    kubectl-whoami    # Current user context
+    kubectl-blame     # Resource change tracking
+
+    # Platform & Service Operators
+    argocd           # GitOps deployment
+    cert-manager     # Certificate management
+    cilium-cli       # CNI management
+    cloudnative-pg   # PostgreSQL operator
+    crossplane-cli   # Infrastructure provisioning
+    kratix           # Platform composition
+    velero           # Backup and restore
+    istioctl         # Service mesh control
+
+    # Additional Tools
+    kubectl-advise-policy  # Policy recommendations
+    kubectl-login         # Authentication helper
+    kubectl-kubesec-scan  # Security scanning
+    kubectl-score        # Manifest scoring
+    kubectl-tap          # Pod traffic tap
+    lens                 # Kubernetes IDE
+
   ];
 
   # Enable docker without sudo
