@@ -8,13 +8,9 @@
 
   # Networking
   networking = {
-    hostName = "devops-workstation";
     networkmanager.enable = true;
     wireless.enable = true;
   };
-
-  # Set your time zone
-  time.timeZone = "Europe/Athens";
 
   # Select internationalisation properties
   i18n.defaultLocale = "en_US.UTF-8";
