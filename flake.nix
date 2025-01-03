@@ -16,7 +16,7 @@
   outputs = { self, nixpkgs, home-manager, darwin, ... }:
     let
       # Common modules shared between NixOS and Darwin
-      #commonModules = [
+      commonModules = [
       #  ./common/base.nix
       #  ./common/personal.nix
       #  ./common/infrastructure.nix
